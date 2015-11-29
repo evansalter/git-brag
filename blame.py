@@ -20,21 +20,20 @@ def printGraph():
     print "Percentages of lines added per user:"
     for index in range(len(usernames)):
         percent = float(zeroIfNull(inserted[index]))/totalInserted*100
-        # print usernames[index] + ": " + str(int(percent)) + "%"
         print "[",
         numSigns=0
         for i in range(0, int(percent), 5):
-            print "=",
+            print "#",
             numSigns += 1
         for i in range(numSigns, 20, 1):
-            print " ",
+            print "-",
         print "] " + str(int(percent)) + "%\t--> " + usernames[index]
 
 usernames = subprocess.check_output("git shortlog -s | cut -c8- | sort -u", shell=True).splitlines()
 
 cmd1 = "git log --shortstat --author '"
-# cmd2 = "' --since \"2015-10-30\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print \"\", files, \"\", inserted, \"\", deleted}'"
-cmd2 = "' --since \"2015-10-30\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+cmd2 = "'| grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+# cmd2 = "' --since \"2015-10-30\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
 
 files = []
 inserted = []
