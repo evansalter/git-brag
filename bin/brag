@@ -20,7 +20,7 @@ def zeroIfNull(s):
 def printGraph():
     print("Percentage of lines inserted per user:")
     for index in range(len(usernames)):
-        percent = float(zeroIfNull(inserted[index]))/totalInserted*100
+        percent = float(zeroIfNull(inserted[index]).rstrip('\n'))/totalInserted*100
         print("["),
         numSigns=0
         for i in range(0, int(percent), 5):
