@@ -2,6 +2,7 @@
 
 import subprocess
 import os
+import sys
 import string
 
 def convInt(s):
@@ -17,7 +18,7 @@ def zeroIfNull(s):
         return s
 
 def printGraph():
-    print "Percentages of lines added per user:"
+    print "Percentage of lines inserted per user:"
     for index in range(len(usernames)):
         percent = float(zeroIfNull(inserted[index]))/totalInserted*100
         print "[",
@@ -28,6 +29,15 @@ def printGraph():
         for i in range(numSigns, 20, 1):
             print "-",
         print "] " + str(int(percent)) + "%\t--> " + usernames[index]
+
+def inRepo():
+    try:
+        subprocess.check_output("git status", shell=True)
+        return 0
+    except:
+        sys.exit(-1)
+
+inRepo()
 
 usernames = subprocess.check_output("git shortlog -s | cut -c8- | sort -u", shell=True).splitlines()
 

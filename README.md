@@ -48,7 +48,7 @@ Files changed: 17
 Lines inserted: 124
 Lines deleted: 18
 
-Percentages of lines added per user:
+Percentage of lines added per user:
 [ # # # # # # # # # # # # # - - - - - - - ] 62%	--> Peter Siemens
 [ # - - - - - - - - - - - - - - - - - - - ] 5%	--> Rob Cutmore
 [ # - - - - - - - - - - - - - - - - - - - ] 4%	--> Roman
@@ -57,3 +57,10 @@ Percentages of lines added per user:
 [ # # # - - - - - - - - - - - - - - - - - ] 11%	--> filipdanic
 [ # - - - - - - - - - - - - - - - - - - - ] 3%	--> rgllm
 ```
+
+## TODO
+
+- [ ] Allow date ranges to be passed as parameters
+- [ ] Add support for charts showing files changed and lines deleted
+
+If there is something else you would like added, let me know or submit a pull request.
