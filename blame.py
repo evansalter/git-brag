@@ -14,8 +14,6 @@ def zeroIfNull(s):
     else:
         return s
 
-os.chdir("/Users/evansalter/git/370-15a3/")
-
 usernames = subprocess.check_output("git shortlog -s | cut -c8- | sort -u", shell=True).splitlines()
 
 cmd1 = "git log --shortstat --author '"
