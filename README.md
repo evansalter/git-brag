@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/evansalter/git-brag.svg?branch=master)](https://travis-ci.org/evansalter/git-brag)
+
 # Git Brag
 
 A python script that prints out the contributions of each author in the project.  Statistics shown are:
