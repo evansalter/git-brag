@@ -28,7 +28,7 @@ def printGraph():
             numSigns += 1
         for i in range(numSigns, 20, 1):
             print("-"),
-        print("] " + str(int(percent)) + "%\t--> " + usernames[index])
+        print("] " + str(int(percent)) + "%\t--> " + str(usernames[index]))
 
 def inRepo():
     try:
@@ -50,8 +50,8 @@ inserted = []
 deleted = []
 
 for index in range(len(usernames)):
-    cmd = cmd1 + usernames[index] + cmd2
-    print(usernames[index] + ":")
+    cmd = cmd1 + str(usernames[index]) + cmd2
+    print(str(usernames[index]) + ":")
     output = subprocess.check_output(cmd, shell=True)
 
     f = subprocess.check_output("echo \"" + output + "\" | cut -d ' ' -f1", shell=True).rstrip()
