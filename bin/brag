@@ -54,9 +54,9 @@ for index in range(len(usernames)):
     print(str(usernames[index]) + ":")
     output = subprocess.check_output(cmd, shell=True)
 
-    f = subprocess.check_output("echo \"" + output + "\" | cut -d ' ' -f1", shell=True).rstrip()
-    i = subprocess.check_output("echo \"" + output + "\" | cut -d ' ' -f2", shell=True).rstrip()
-    d = subprocess.check_output("echo \"" + output + "\" | cut -d ' ' -f3", shell=True).rstrip()
+    f = subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f1", shell=True).rstrip()
+    i = subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f2", shell=True).rstrip()
+    d = subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f3", shell=True).rstrip()
     files.append(f)
     inserted.append(i)
     deleted.append(d)
