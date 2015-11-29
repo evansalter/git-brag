@@ -15,3 +15,45 @@ A python script that prints out the contributions of each author in the project.
 ## Usage
 
 While in a git repository, run `brag`
+
+## Demo
+
+Running `brag` on the repo for the awesome Chrome extension “Terrorist to Coward” by [psiemens](https://github.com/psiemens) produces the following:
+
+```
+Peter Siemens:
+Files changed: 9; Lines inserted: 77; Lines deleted: 16
+---------------------------
+Rob Cutmore:
+Files changed: 1; Lines inserted: 7; Lines deleted: 0
+---------------------------
+Roman:
+Files changed: 1; Lines inserted: 5; Lines deleted: 0
+---------------------------
+Spyros Panagiotopoulos:
+Files changed: 2; Lines inserted: 13; Lines deleted: 0
+---------------------------
+Tianyun Shan:
+Files changed: 2; Lines inserted: 4; Lines deleted: 2
+---------------------------
+filipdanic:
+Files changed: 1; Lines inserted: 14; Lines deleted: 0
+---------------------------
+rgllm:
+Files changed: 1; Lines inserted: 4; Lines deleted: 0
+---------------------------
+
+Totals:
+Files changed: 17
+Lines inserted: 124
+Lines deleted: 18
+
+Percentages of lines added per user:
+[ # # # # # # # # # # # # # - - - - - - - ] 62%	--> Peter Siemens
+[ # - - - - - - - - - - - - - - - - - - - ] 5%	--> Rob Cutmore
+[ # - - - - - - - - - - - - - - - - - - - ] 4%	--> Roman
+[ # # - - - - - - - - - - - - - - - - - - ] 10%	--> Spyros Panagiotopoulos
+[ # - - - - - - - - - - - - - - - - - - - ] 3%	--> Tianyun Shan
+[ # # # - - - - - - - - - - - - - - - - - ] 11%	--> filipdanic
+[ # - - - - - - - - - - - - - - - - - - - ] 3%	--> rgllm
+```
