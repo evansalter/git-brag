@@ -19,8 +19,8 @@ def zeroIfNull(s):
 
 def printGraph():
     print("Percentage of lines inserted per user:")
-    for index in range(len(usernames)):
-        percent = float(zeroIfNull(inserted[index]))/totalInserted*100
+    for username, i in zip(usernames, inserted):
+        percent = float(zeroIfNull(i))/totalInserted*100
         print("["),
         numSigns=0
         for i in range(0, int(percent), 5):
@@ -28,7 +28,7 @@ def printGraph():
             numSigns += 1
         for i in range(numSigns, 20, 1):
             print("-"),
-        print("] " + str(int(percent)) + "%\t--> " + str(usernames[index]))
+        print("] " + str(int(percent)) + "%\t--> " + str(username))
 
 def inRepo():
     try:
@@ -49,35 +49,28 @@ files = []
 inserted = []
 deleted = []
 
-for index in range(len(usernames)):
-    cmd = cmd1 + str(usernames[index]) + cmd2
-    print(str(usernames[index]) + ":")
-    output = subprocess.check_output(cmd, shell=True)
+cmds = [cmd1 + str(username) + cmd2 for username in usernames]
+outputs = [subprocess.check_output(cmd, shell=True) for cmd in cmds]
+for output in outputs:
+    files.append(str(subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f1", shell=True).rstrip()))
+    inserted.append(str(subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f2", shell=True).rstrip()))
+    deleted.append(str(subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f3", shell=True).rstrip()))
 
-    f = str(subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f1", shell=True).rstrip())
-    i = str(subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f2", shell=True).rstrip())
-    d = str(subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f3", shell=True).rstrip())
-    files.append(f)
-    inserted.append(i)
-    deleted.append(d)
-
-    print("Files changed: " + str(zeroIfNull(f)) + "; Lines inserted: " + str(zeroIfNull(i)) + "; Lines deleted: " + str(zeroIfNull(d)))
+for username, file, i, d in zip(usernames, files, inserted, deleted):
+    print(str(username) + ":")
+    print("Files changed: " + str(file))
+    print("Lines inserted: " + str(i))
+    print("Lines deleted: " + str(d))
     print("---------------------------")
 
-totalFiles=0
-totalInserted=0
-totalDeleted=0
 
-for index in range(len(files)):
-    totalFiles += convInt(files[index])
-    totalInserted += convInt(inserted[index])
-    totalDeleted += convInt(deleted[index])
+totalFiles = sum(convInt(f) for f in files)
+totalInserted = sum(convInt(i) for i in inserted)
+totalDeleted = sum(convInt(d) for d in deleted)
 
 print("\nTotals:")
 print("Files changed: " + str(totalFiles))
 print("Lines inserted: " + str(totalInserted))
-print("Lines deleted: " + str(totalDeleted))
-
-print("")
+print("Lines deleted: " + str(totalDeleted) + "\n")
 
 printGraph()
