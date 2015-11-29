@@ -18,17 +18,17 @@ def zeroIfNull(s):
         return s
 
 def printGraph():
-    print "Percentage of lines inserted per user:"
+    print("Percentage of lines inserted per user:")
     for index in range(len(usernames)):
         percent = float(zeroIfNull(inserted[index]))/totalInserted*100
-        print "[",
+        print("["),
         numSigns=0
         for i in range(0, int(percent), 5):
-            print "#",
+            print("#"),
             numSigns += 1
         for i in range(numSigns, 20, 1):
-            print "-",
-        print "] " + str(int(percent)) + "%\t--> " + usernames[index]
+            print("-"),
+        print("] " + str(int(percent)) + "%\t--> " + usernames[index])
 
 def inRepo():
     try:
@@ -43,7 +43,7 @@ usernames = subprocess.check_output("git shortlog -s | cut -c8- | sort -u", shel
 
 cmd1 = "git log --shortstat --author '"
 cmd2 = "'| grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
-# cmd2 = "' --since \"2015-10-30\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+# cmd2 = "' --since \"2015-10-30\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print(files, inserted, deleted}'"
 
 files = []
 inserted = []
@@ -51,7 +51,7 @@ deleted = []
 
 for index in range(len(usernames)):
     cmd = cmd1 + usernames[index] + cmd2
-    print usernames[index] + ":"
+    print(usernames[index] + ":")
     output = subprocess.check_output(cmd, shell=True)
 
     f = subprocess.check_output("echo \"" + output + "\" | cut -d ' ' -f1", shell=True).rstrip()
@@ -61,8 +61,8 @@ for index in range(len(usernames)):
     inserted.append(i)
     deleted.append(d)
 
-    print "Files changed: " + zeroIfNull(f) + "; Lines inserted: " + zeroIfNull(i) + "; Lines deleted: " + zeroIfNull(d)
-    print "---------------------------"
+    print("Files changed: " + zeroIfNull(f) + "; Lines inserted: " + zeroIfNull(i) + "; Lines deleted: " + zeroIfNull(d))
+    print("---------------------------")
 
 totalFiles=0
 totalInserted=0
@@ -73,11 +73,11 @@ for index in range(len(files)):
     totalInserted += convInt(inserted[index])
     totalDeleted += convInt(deleted[index])
 
-print "\nTotals:"
-print "Files changed: " + str(totalFiles)
-print "Lines inserted: " + str(totalInserted)
-print "Lines deleted: " + str(totalDeleted)
+print("\nTotals:")
+print("Files changed: " + str(totalFiles))
+print("Lines inserted: " + str(totalInserted))
+print("Lines deleted: " + str(totalDeleted))
 
-print 
+print("")
 
 printGraph()
