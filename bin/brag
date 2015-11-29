@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-import subprocess
+import argparse
 import os
+import subprocess
 import sys
-import string
 
 def convInt(s):
     try:
@@ -19,16 +19,19 @@ def zeroIfNull(s):
 
 def printGraph():
     print("Percentage of lines inserted per user:")
-    for username, i in zip(usernames, inserted):
-        percent = float(zeroIfNull(i))/totalInserted*100
-        print("["),
-        numSigns=0
-        for i in range(0, int(percent), 5):
-            print("#"),
-            numSigns += 1
-        for i in range(numSigns, 20, 1):
-            print("-"),
-        print("] " + str(int(percent)) + "%\t--> " + str(username))
+    try:
+        for username, i in zip(usernames, inserted):
+           percent = float(zeroIfNull(i))/totalInserted*100
+           print("["),
+           numSigns=0
+           for i in range(0, int(percent), 5):
+               print("#"),
+               numSigns += 1
+           for i in range(numSigns, 20, 1):
+               print("-"),
+           print("] " + str(int(percent)) + "%\t--> " + str(username))
+    except ZeroDivisionError:
+        print("No data to show")
 
 def inRepo():
     try:
@@ -37,13 +40,34 @@ def inRepo():
     except:
         sys.exit(-1)
 
+def parseArgs():
+    parser = argparse.ArgumentParser(description="Calculate the contribution of each author in a git repository")
+    parser.add_argument("-s", "--start", help="Start date for search range.  Can be human-readable, such as \"One week ago\" or numerical, like \"2015-01-06\".  Must be in double quotes.")
+    parser.add_argument("-e", "--end", help="End date for search range.  Can be human-readable, such as \"One week ago\" or numerical, like \"2015-01-06\".  Must be in double quotes.")
+    return parser.parse_args()
+
+
 inRepo()
+
+args = parseArgs()
 
 usernames = subprocess.check_output("git shortlog -s | cut -c8- | sort -u", shell=True).splitlines()
 
 cmd1 = "git log --shortstat --author '"
-cmd2 = "'| grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
-# cmd2 = "' --since \"2015-10-30\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print(files, inserted, deleted}'"
+cmd2 = ""
+
+if args.start and not args.end:
+    # start only
+    cmd2 = "' --since \"" + args.start + "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+elif args.start and args.end:
+    # start and end
+    cmd2 = "' --since \"" + args.start + "\" --until \"" + args.end + "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+elif not args.start and args.end:
+    # end only
+    cmd2 = "' --until \"" + args.end + "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+else:
+    # neither
+    cmd2 = "'| grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
 
 files = []
 inserted = []

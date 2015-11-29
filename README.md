@@ -18,6 +18,14 @@ A python script that prints out the contributions of each author in the project.
 
 While in a git repository, run `brag`
 
+If you want to specify the date range to search in, use the `--start` and `--end` arguments (or `-s` and `-e` for short):
+
+Example:
+
+- `brag -s "one week ago" -e "yesterday"`
+- `brag --start "2015-01-04"1
+- `brag -s "2015-04-13" --end "two days ago"`
+
 ## Demo
 
 Running `brag` on the repo for the awesome Chrome extension “Terrorist to Coward” by [psiemens](https://github.com/psiemens) produces the following:
@@ -62,7 +70,7 @@ Percentage of lines added per user:
 
 ## TODO
 
-- [ ] Allow date ranges to be passed as parameters
+- [x] Allow date ranges to be passed as parameters
 - [ ] Add support for charts showing files changed and lines deleted
 
 If there is something else you would like added, let me know or submit a pull request.
