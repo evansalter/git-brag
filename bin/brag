@@ -22,14 +22,15 @@ def printGraph():
     try:
         for username, i in zip(usernames, inserted):
            percent = float(zeroIfNull(i))/totalInserted*100
-           print("["),
-           numSigns=0
-           for i in range(0, int(percent), 5):
-               print("#"),
-               numSigns += 1
-           for i in range(numSigns, 20, 1):
-               print("-"),
-           print("] " + str(int(percent)) + "%\t--> " + str(username))
+           if not len(usernames) > 30 or not percent < 0.5:
+                print("["),
+                numSigns=0
+                for i in range(0, int(percent), 5):
+                     print("#"),
+                     numSigns += 1
+                for i in range(numSigns, 20, 1):
+                     print("-"),
+                print("] " + str(int(percent)) + "%\t--> " + str(username))
     except ZeroDivisionError:
         print("No data to show")
 
@@ -53,21 +54,21 @@ args = parseArgs()
 
 usernames = subprocess.check_output("git shortlog -s | cut -c8- | sort -u", shell=True).splitlines()
 
-cmd1 = "git log --shortstat --author '"
+cmd1 = "git log --shortstat --author \""
 cmd2 = ""
 
 if args.start and not args.end:
     # start only
-    cmd2 = "' --since \"" + args.start + "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+    cmd2 = "\" --since \"" + args.start + "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
 elif args.start and args.end:
     # start and end
-    cmd2 = "' --since \"" + args.start + "\" --until \"" + args.end + "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+    cmd2 = "\" --since \"" + args.start + "\" --until \"" + args.end + "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
 elif not args.start and args.end:
     # end only
-    cmd2 = "' --until \"" + args.end + "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+    cmd2 = "\" --until \"" + args.end + "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
 else:
     # neither
-    cmd2 = "'| grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+    cmd2 = "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
 
 files = []
 inserted = []
