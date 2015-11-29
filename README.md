@@ -23,7 +23,7 @@ If you want to specify the date range to search in, use the `--start` and `--end
 Example:
 
 - `brag -s "one week ago" -e "yesterday"`
-- `brag --start "2015-01-04"1
+- `brag --start "2015-01-04"`
 - `brag -s "2015-04-13" --end "two days ago"`
 
 ## Demo
