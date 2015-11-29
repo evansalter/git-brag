@@ -61,7 +61,7 @@ for index in range(len(usernames)):
     inserted.append(i)
     deleted.append(d)
 
-    print("Files changed: " + zeroIfNull(f) + "; Lines inserted: " + zeroIfNull(i) + "; Lines deleted: " + zeroIfNull(d))
+    print("Files changed: " + str(zeroIfNull(f)) + "; Lines inserted: " + str(zeroIfNull(i)) + "; Lines deleted: " + str(zeroIfNull(d)))
     print("---------------------------")
 
 totalFiles=0
