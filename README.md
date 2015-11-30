@@ -34,13 +34,23 @@ Example:
 - `brag --start "2015-01-04"`
 - `brag -s "2015-04-13" --end "two days ago"`
 
-## Stability
+## Testing
 
-To test the stability of this program I ran `brag` with no date-range arguments on the [django](https://github.com/django/django) repository.  At the time of testing, the repo had 1027 contributors.  Execution completed without errors, but it took 4m 46sec on my machine (Late 2013 MBP/i7/16GB RAM).
+I have tested `brag` with a number of repos to ensure stability and to record speed.  I ran the following tests on my 2013 MacBook Pro (i7/16GB RAM/OS X 10.11).  All the tests completed successfully.
 
-`brag` took 16sec to analyze Facebook's [flow](https://github.com/facebook/flow) repo with 99 contributors.
+### Methodology
 
-For Google's [googletest](https://github.com/google/googletest) repo with 20 contributors, it took 2sec.
+1. `git clone` repo and `cd` into it
+2. Run `blame` with no arguments.  This makes it report on every single commit since the creation of the repo
+3. Using a stopwatch, time how long the program takes to run and output
+
+### Results
+
+|Repository|Number of Contributors|Running Time (mm:ss)|
+|---|---|---|
+|[django](https://github.com/django)/[django](https://github.com/django/django)|1027|04:46|
+|[facebook](https://github.com/facebook)/[flow](https://github.com/facebook/flow)|99|00:16|
+|[google](https://github.com/google)/[googletest](https://github.com/google/googletest)|20|00:02|
 
 For most projects, speed shouldn't be an issue.
 
