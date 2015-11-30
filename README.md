@@ -20,6 +20,8 @@ A python script that prints out the contributions of each author in the project.
 1. `cd git-brag`
 1. `python setup.py install`
 
+Note: If you do not have the privileges to install global packages, replace step 3 with `python setup.py install --user`.  The program will be installed in `~/.local/bin` on UNIX or `~/Library/Python/X.Y` on Mac.
+
 ## Usage
 
 While in a git repository, run `brag`
