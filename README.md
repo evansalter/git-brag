@@ -41,7 +41,7 @@ I have tested `brag` with a number of repos to ensure stability and to record sp
 ### Methodology
 
 1. `git clone` repo and `cd` into it
-2. Run `blame` with no arguments.  This makes it report on every single commit since the creation of the repo
+2. Run `brag` with no arguments.  This makes it report on every single commit since the creation of the repo
 3. Using a stopwatch, time how long the program takes to run and output
 
 ### Results
