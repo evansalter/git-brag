@@ -41,16 +41,16 @@ I have tested `brag` with a number of repos to ensure stability and to record sp
 ### Methodology
 
 1. `git clone` repo and `cd` into it
-2. Run `brag` with no arguments.  This makes it report on every single commit since the creation of the repo
-3. Using a stopwatch, time how long the program takes to run and output
+2. Run `time brag` with no arguments.  This makes it report on every single commit since the creation of the repo
+3. The total elapsed time is reported once the command completes
 
 ### Results
 
-|Repository|Number of Contributors|Running Time (mm:ss)|
+|Repository|Number of Contributors|Number of Commits|Running Time|
 |---|---|---|
-|[django](https://github.com/django)/[django](https://github.com/django/django)|1027|04:46|
-|[facebook](https://github.com/facebook)/[flow](https://github.com/facebook/flow)|99|00:16|
-|[google](https://github.com/google)/[googletest](https://github.com/google/googletest)|20|00:02|
+|[django](https://github.com/django)/[django](https://github.com/django/django)|1031|21,792|240.83sec (4min 1sec)|
+|[facebook](https://github.com/facebook)/[flow](https://github.com/facebook/flow)|118|1,737|4.70sec|
+|[google](https://github.com/google)/[googletest](https://github.com/google/googletest)|26|892|1.41sec|
 
 For most projects, speed shouldn't be an issue.
 
