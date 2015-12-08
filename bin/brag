@@ -2,6 +2,7 @@
 
 import argparse
 import os
+import re
 import subprocess
 import sys
 
@@ -59,16 +60,16 @@ cmd2 = ""
 
 if args.start and not args.end:
     # start only
-    cmd2 = "\" --since \"" + args.start + "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+    cmd2 = "\" --since \"" + args.start + "\""
 elif args.start and args.end:
     # start and end
-    cmd2 = "\" --since \"" + args.start + "\" --until \"" + args.end + "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+    cmd2 = "\" --since \"" + args.start + "\" --until \"" + args.end + "\""
 elif not args.start and args.end:
     # end only
-    cmd2 = "\" --until \"" + args.end + "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+    cmd2 = "\" --until \"" + args.end + "\""
 else:
     # neither
-    cmd2 = "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
+    cmd2 = "\""
 
 files = []
 inserted = []
@@ -77,9 +78,24 @@ deleted = []
 cmds = [cmd1 + str(username) + cmd2 for username in usernames]
 outputs = [subprocess.check_output(cmd, shell=True) for cmd in cmds]
 for output in outputs:
-    files.append(str(subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f1", shell=True).rstrip()))
-    inserted.append(str(subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f2", shell=True).rstrip()))
-    deleted.append(str(subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f3", shell=True).rstrip()))
+    lines = output.splitlines()
+    f=0
+    i=0
+    d=0
+    for line in lines:
+        if re.search(r'[0-9]+ file.*', str(line)):
+	    f = f + convInt(line.split(' ')[1])
+	    try:
+	    	i = i + convInt(line.split(' ')[4])
+	    except:
+		()
+	    try:
+	    	d = d + convInt(line.split(' ')[6])
+	    except:
+		()
+    files.append(str(f))
+    inserted.append(str(i))
+    deleted.append(str(d))
 
 for username, file, i, d in zip(usernames, files, inserted, deleted):
     print(str(username) + ":")
