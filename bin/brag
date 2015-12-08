@@ -71,8 +71,6 @@ else:
     # neither
     cmd2 = "\""
 
-    # cmd2 = "\" | grep \"files\\? changed\" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print files, inserted, deleted}'"
-
 files = []
 inserted = []
 deleted = []
@@ -81,26 +79,23 @@ cmds = [cmd1 + str(username) + cmd2 for username in usernames]
 outputs = [subprocess.check_output(cmd, shell=True) for cmd in cmds]
 for output in outputs:
     lines = output.splitlines()
+    f=0
+    i=0
+    d=0
     for line in lines:
         if re.search(r'[0-9]+ file.*', str(line)):
-            files.append(line.split(' ')[1])
-            segments = line.split(', ')
-            length = len(segments)
-            if length == 2:
-                # files and (inserted or deleted)
-                if re.search(r'[0-9]+ insert.*', str(line)):
-                    inserted.append(segments[1].split(' ')[0])
-                else:
-                    deleted.append(segments[1].split(' ')[0])
-            else:
-                # files, inserted, and deleted
-                inserted.append(segments[1].split(' ')[0])
-                deleted.append(segments[2].split(' ')[0])
-
-
-    # files.append(str(subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f1", shell=True).rstrip()))
-    # inserted.append(str(subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f2", shell=True).rstrip()))
-    # deleted.append(str(subprocess.check_output("echo \"" + str(output) + "\" | cut -d ' ' -f3", shell=True).rstrip()))
+	    f = f + convInt(line.split(' ')[1])
+	    try:
+	    	i = i + convInt(line.split(' ')[4])
+	    except:
+		()
+	    try:
+	    	d = d + convInt(line.split(' ')[6])
+	    except:
+		()
+    files.append(str(f))
+    inserted.append(str(i))
+    deleted.append(str(d))
 
 for username, file, i, d in zip(usernames, files, inserted, deleted):
     print(str(username) + ":")
