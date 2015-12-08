@@ -47,7 +47,7 @@ I have tested `brag` with a number of repos to ensure stability and to record sp
 ### Results
 
 |Repository|Number of Contributors|Number of Commits|Running Time|
-|---|---|---|
+|---|---|---|---|
 |[django](https://github.com/django)/[django](https://github.com/django/django)|1031|21,792|240.83sec (4min 1sec)|
 |[facebook](https://github.com/facebook)/[flow](https://github.com/facebook/flow)|118|1,737|4.70sec|
 |[google](https://github.com/google)/[googletest](https://github.com/google/googletest)|26|892|1.41sec|
