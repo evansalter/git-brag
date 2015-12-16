@@ -40,18 +40,23 @@ def inRepo():
         subprocess.check_output("git status", shell=True)
         return 0
     except:
+        parser.print_help()
         sys.exit(-1)
 
 def parseArgs():
+    global parser
     parser = argparse.ArgumentParser(description="Calculate the contribution of each author in a git repository")
     parser.add_argument("-s", "--start", help="Start date for search range.  Can be human-readable, such as \"One week ago\" or numerical, like \"2015-01-06\".  Must be in double quotes.")
     parser.add_argument("-e", "--end", help="End date for search range.  Can be human-readable, such as \"One week ago\" or numerical, like \"2015-01-06\".  Must be in double quotes.")
     return parser.parse_args()
 
-
-inRepo()
+# ------------------
+# Main Program
+# ------------------
 
 args = parseArgs()
+
+inRepo()
 
 usernames = subprocess.check_output("git shortlog -s | cut -c8- | sort -u", shell=True).splitlines()
 
