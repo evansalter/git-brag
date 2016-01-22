@@ -89,15 +89,15 @@ for output in outputs:
     d=0
     for line in lines:
         if re.search(r'[0-9]+ file.*', str(line)):
-	    f = f + convInt(line.split(' ')[1])
-	    try:
-	    	i = i + convInt(line.split(' ')[4])
-	    except:
-		()
-	    try:
-	    	d = d + convInt(line.split(' ')[6])
-	    except:
-		()
+            f = f + convInt(line.split(' ')[1])
+            try:
+                i = i + convInt(line.split(' ')[4])
+            except:
+                pass
+            try:
+                d = d + convInt(line.split(' ')[6])
+            except:
+		pass
     files.append(str(f))
     inserted.append(str(i))
     deleted.append(str(d))
